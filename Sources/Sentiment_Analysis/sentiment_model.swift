@@ -15,13 +15,14 @@ public struct Sentiment: Module{
     // NUmber of the CNN layer filters
     @noDerivative public let classDim: Int
     //
-    @noDerivative public let dropoutRate: Scalar
+    @noDerivative public let dropoutRate: Double
 
     public var embedLayer: Embedding<Scalar>
     public var conv1: Conv2D<Scalar>
     public var conv2: Conv2D<Scalar>
     public var conv3: Conv2D<Scalar>
     public var output: Dense<Scalar>
+    public var dropout: Dropout<Scalar>
 
     public init(
         embDim: Int,
@@ -29,7 +30,7 @@ public struct Sentiment: Module{
         sentLen: Int,
         hidDim: Int,
         classDim: Int,
-        dropoutRate: Scalar
+        dropoutRate: Double
     ) {
         self.embDim = embDim
         self.numWords = numWords
@@ -45,7 +46,8 @@ public struct Sentiment: Module{
         // TODO: Add MaxPool1D and Dropout
         // var pool1 = MaxPool1D<Float>(poolSize: , strides: (2, 2))
 
-        self.output = Dense(inputSize: 3*self.numWords, outputSize: self.classDim, activation: softmax)
+        output = Dense(inputSize: 3*self.numWords, outputSize: self.classDim, activation: softmax)
+        dropout = Dropout(probability: dropoutRate)
     }
     @differentiable
     public func callAsFunction(_ input: Tensor<Int32>) -> Tensor<Scalar>{

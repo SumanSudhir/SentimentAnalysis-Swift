@@ -1,0 +1,13 @@
+.ftpconfig
+.ftpconfig.cson
+.ftpignore
+id_rsa
+.DS_Store
+.git
+/paper
+/swift-install
+.ipynb_checkpoints
+__pycache__
+/.build
+/Packages
+/data
